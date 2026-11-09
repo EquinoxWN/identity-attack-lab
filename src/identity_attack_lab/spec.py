@@ -38,7 +38,10 @@ DOMAIN_TARGET = "domain"
 
 _FQDN = re.compile(r"^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+test$")
 _NETBIOS = re.compile(r"^[A-Z][A-Z0-9-]{0,14}$")
-_DOMAIN_SID = re.compile(r"^S-1-5-21-\d{1,10}-\d{1,10}-\d{1,10}$")
+_DOMAIN_SID = re.compile(r"^S-1-5-21-[0-9]{1,10}-[0-9]{1,10}-[0-9]{1,10}$")
+# Values rendered into PowerShell/Ruby strings: printable ASCII only. PowerShell also treats the
+# Unicode quotes U+2018..U+201B as single quotes, so a denylist alone is not enough.
+_PRINTABLE = re.compile(r"[\x20-\x7E]+")
 _HOST = re.compile(r"^[A-Z][A-Z0-9-]{0,14}$")
 _USER = re.compile(r"^[a-z][a-z0-9_.-]{0,19}$")
 _GROUP = re.compile(r"^[A-Za-z][A-Za-z0-9 _-]{0,63}$")
@@ -204,6 +207,8 @@ def _tables(doc: dict[str, Any], key: str) -> list[dict[str, Any]]:
 def _password(value: Any, where: str) -> str:
     """A password that is visibly fake and still meets AD complexity rules."""
     pw = _str(value, where)
+    if not _PRINTABLE.fullmatch(pw):
+        raise SpecError(f"{where}: only printable ASCII characters are allowed")
     if FAKE_MARKER not in pw:
         raise SpecError(f"{where}: lab passwords must contain {FAKE_MARKER!r}")
     classes = sum(
@@ -325,7 +330,10 @@ def _users(doc: dict[str, Any], groups: set[str]) -> tuple[User, ...]:
                 description=_str(t.get("description", ""), f"{where}.description"),
             )
         )
-        if len(users[-1].description) > 200 or any(c in users[-1].description for c in "'\"`$"):
+        desc = users[-1].description
+        if desc and not _PRINTABLE.fullmatch(desc):
+            raise SpecError(f"{where}.description: only printable ASCII characters are allowed")
+        if len(desc) > 200 or any(c in desc for c in "'\"`$"):
             raise SpecError(f"{where}.description: at most 200 chars, no quotes or '$'")
     return tuple(users)
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import dataclasses
 import os
 import re
 from pathlib import Path
@@ -109,3 +110,11 @@ def test_box_password_matches_packer_and_answer_files() -> None:
     assert f'default   = "{BOX_PASSWORD}"' in hcl
     for xml in (ROOT / "packer" / "answer").glob("*.xml"):
         assert BOX_PASSWORD in xml.read_text(encoding="utf-8")
+
+
+def test_renderer_refuses_non_ascii_even_if_validation_is_bypassed() -> None:
+    spec = load_spec(SPEC)
+    evil = dataclasses.replace(spec.users[0], description="x\u2019y")
+    bad = dataclasses.replace(spec, users=(evil, *spec.users[1:]))
+    with pytest.raises(ValueError, match=r"U\+2019 is not printable ASCII"):
+        render_all(bad)

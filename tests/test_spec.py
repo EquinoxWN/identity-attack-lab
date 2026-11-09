@@ -86,6 +86,11 @@ BAD: dict[str, tuple[Callable[[Doc], None], str]] = {
     "real-password": (_set("users.0.password", "Summer2026!xyzA"), "EXAMPLE-NOT-A-SECRET"),
     "weak-password": (_set("users.0.password", "EXAMPLE-NOT-A-SECRET"), "upper, lower"),
     "no-digit-password": (_set("users.0.password", "EXAMPLE-NOT-A-SECRET-abc"), "upper, lower"),
+    "unicode-quote-password": (
+        _set("users.0.password", "EXAMPLE-NOT-A-SECRET-a1\u2019"),
+        "printable ASCII",
+    ),
+    "unicode-quote-description": (_set("users.0.description", "it\u2018s"), "printable ASCII"),
     "quote-password": (_set("users.0.password", "EXAMPLE-NOT-A-SECRET-a1'"), "quotes"),
     "dollar-password": (_set("domain.admin_password", "EXAMPLE-NOT-A-SECRET-a1$"), "quotes"),
     "unknown-group": (_set("users.2.groups", ["Nope"]), "unknown group"),

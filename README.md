@@ -17,7 +17,7 @@ Zero and no others (`verify` exits 1 on any difference):
 
 ![lab checks, paths to Tier Zero and verification](docs/proof/demo.jpg)
 
-Lint, strict types, the 135-test suite and the full local check (Packer validate, PowerShell parse,
+Lint, strict types, the 138-test suite and the full local check (Packer validate, PowerShell parse,
 dependency audit):
 
 ![ruff, mypy, pytest and check.sh](docs/proof/tests.jpg)
@@ -106,7 +106,7 @@ Server 2022 evaluation ISO, about 8 GB of free RAM and 40 GB of disk.
 
 ```bash
 make setup     # dev tools (the package itself has no runtime dependencies)
-make test      # 135 tests
+make test      # 138 tests
 make bench     # render check, isolation checks, path verification, path table
 make render    # after editing lab/lab.toml
 ```
@@ -132,15 +132,15 @@ the Python code reads no environment variables.
 
 ## Tests and results
 
-Latest local run (full detail in [docs/results/m1.md](docs/results/m1.md)): **135 passed, 0 failed**.
+Latest local run (full detail in [docs/results/m1.md](docs/results/m1.md)): **138 passed, 0 failed**.
 
 | Test file | Tests | What it proves |
 |---|---|---|
-| `tests/test_spec.py` | 58 | The lab loads; 50 unsafe or inconsistent specs are rejected with the key named (real TLD, public range, bad addresses, real-looking or weak passwords, wrong right for a target, unknown names) |
+| `tests/test_spec.py` | 60 | The lab loads; 52 unsafe or inconsistent specs are rejected with the key named (real TLD, public range, bad addresses, real-looking, weak or non-ASCII passwords (including Unicode quotes), wrong right for a target, unknown names) |
 | `tests/test_bloodhound.py` | 23 | Model format and flags; committed model gives the 3 designed paths; DCSync needs both rights; disabled users, Tier Zero, local groups; zip, zip-bomb and size limits; 9 malformed files |
 | `tests/test_isolation.py` | 19 | Shipped files pass; bridged NICs, off-loopback forwards, missing port overrides, shared folders, GUI builds, open VRDP, unverified ISOs, HTTP server and real-looking passwords are caught |
 | `tests/test_paths.py` | 15 | Shortest paths, stable tie-break, no-path and zero-hop cases, reverse exposure, entry points |
-| `tests/test_render.py` | 11 | No drift, deterministic and atomic writes, DC first, every misconfiguration rendered, one box password everywhere |
+| `tests/test_render.py` | 12 | No drift, non-ASCII refused by the renderer too, deterministic and atomic writes, DC first, every misconfiguration rendered, one box password everywhere |
 | `tests/test_cli.py` | 9 | Exit codes 0/1/2 for every command; `verify` reports exact mismatches |
 
 | Check | Result |
@@ -151,7 +151,7 @@ Latest local run (full detail in [docs/results/m1.md](docs/results/m1.md)): **13
 | Isolation and fake-secret checks | 10 files, 0 violations |
 | Generated files in sync | 9/9 |
 | `packer validate` / PowerShell parse | valid / 5 scripts, 0 errors |
-| Hand mutations killed | 15/15 |
+| Hand mutations killed | 18/18 |
 | `pip-audit` | No known vulnerabilities found |
 
 Not verified yet: a full `packer build` and `vagrant up`, a live BloodHound CE ingest and `verify`

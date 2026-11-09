@@ -311,6 +311,15 @@ def render_vagrantfile(spec: LabSpec) -> str:
     return "\n".join(out) + "\n"
 
 
+def _check_printable(rel: str, text: str) -> None:
+    """Defence in depth: generated Ruby/PowerShell must be printable ASCII plus newlines."""
+    # split("\n"), not splitlines(): U+2028, \x0b, \x85 and friends must be reported, not split on.
+    for no, line in enumerate(text.split("\n"), 1):
+        bad = next((c for c in line if not " " <= c <= "~"), None)
+        if bad is not None:
+            raise ValueError(f"{rel}:{no}: character U+{ord(bad):04X} is not printable ASCII")
+
+
 def render_all(spec: LabSpec) -> dict[str, str]:
     """Every generated file, keyed by path relative to the repository root."""
     files = {
@@ -323,6 +332,8 @@ def render_all(spec: LabSpec) -> dict[str, str]:
             vm = h.name.lower()
             files[f"lab/provision/member-join-{vm}.ps1"] = render_member_join(spec, h)
             files[f"lab/provision/member-{vm}.ps1"] = render_member_seed(spec, h)
+    for rel, text in files.items():
+        _check_printable(rel, text)
     for name, doc in model_collection(spec).items():
         files[f"bloodhound/model/{name}"] = json.dumps(doc, indent=2) + "\n"
     return files
