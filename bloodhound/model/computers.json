@@ -1,0 +1,119 @@
+{
+  "data": [
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1001",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "DC01.CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "DC01$",
+        "distinguishedname": "CN=DC01,OU=Domain Controllers,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "isdc": true,
+        "unconstraineddelegation": true,
+        "operatingsystem": "Windows Server 2022 Standard Evaluation"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-516",
+      "IsDC": true,
+      "DomainSID": "S-1-5-21-1000000001-2000000002-3000000003",
+      "LocalGroups": [],
+      "Sessions": {
+        "Results": [],
+        "Collected": true,
+        "FailureReason": null
+      },
+      "PrivilegedSessions": {
+        "Results": [],
+        "Collected": true,
+        "FailureReason": null
+      },
+      "RegistrySessions": {
+        "Results": [],
+        "Collected": true,
+        "FailureReason": null
+      },
+      "UserRights": [],
+      "AllowedToDelegate": [],
+      "AllowedToAct": [],
+      "HasSIDHistory": [],
+      "DumpSMSAPassword": [],
+      "Status": null
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1002",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "WS01.CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "WS01$",
+        "distinguishedname": "CN=WS01,CN=Computers,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "isdc": false,
+        "unconstraineddelegation": false,
+        "operatingsystem": "Windows Server 2022 Standard Evaluation"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-515",
+      "IsDC": false,
+      "DomainSID": "S-1-5-21-1000000001-2000000002-3000000003",
+      "LocalGroups": [
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1002-544",
+          "Name": "ADMINISTRATORS@WS01.CORP.IDLAB.TEST",
+          "Results": [
+            {
+              "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-512",
+              "ObjectType": "Group"
+            },
+            {
+              "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1102",
+              "ObjectType": "Group"
+            }
+          ],
+          "LocalNames": [],
+          "Collected": true,
+          "FailureReason": null
+        }
+      ],
+      "Sessions": {
+        "Results": [
+          {
+            "UserSID": "S-1-5-21-1000000001-2000000002-3000000003-1207",
+            "ComputerSID": "S-1-5-21-1000000001-2000000002-3000000003-1002"
+          }
+        ],
+        "Collected": true,
+        "FailureReason": null
+      },
+      "PrivilegedSessions": {
+        "Results": [],
+        "Collected": true,
+        "FailureReason": null
+      },
+      "RegistrySessions": {
+        "Results": [],
+        "Collected": true,
+        "FailureReason": null
+      },
+      "UserRights": [],
+      "AllowedToDelegate": [],
+      "AllowedToAct": [],
+      "HasSIDHistory": [],
+      "DumpSMSAPassword": [],
+      "Status": null
+    }
+  ],
+  "meta": {
+    "methods": 0,
+    "type": "computers",
+    "count": 2,
+    "version": 6
+  }
+}

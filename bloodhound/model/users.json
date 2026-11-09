@@ -1,0 +1,218 @@
+{
+  "data": [
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-500",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "ADMINISTRATOR@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "Administrator",
+        "distinguishedname": "CN=Administrator,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": false,
+        "admincount": true,
+        "description": null
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1201",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "ALICE@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "alice",
+        "distinguishedname": "CN=alice,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": false,
+        "admincount": false,
+        "description": "Foothold: an ordinary employee account assumed to be phished"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1202",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "BOB@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "bob",
+        "distinguishedname": "CN=bob,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": false,
+        "admincount": false,
+        "description": "Control: an ordinary employee with no path to Tier Zero"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1203",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "CAROL@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "carol",
+        "distinguishedname": "CN=carol,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": true,
+        "admincount": false,
+        "description": "Helpdesk operator with Kerberos pre-authentication disabled"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1204",
+      "Aces": [
+        {
+          "PrincipalSID": "S-1-5-21-1000000001-2000000002-3000000003-1101",
+          "PrincipalType": "Group",
+          "RightName": "ForceChangePassword",
+          "IsInherited": false
+        }
+      ],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "IT_IAN@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "it_ian",
+        "distinguishedname": "CN=it_ian,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": false,
+        "admincount": false,
+        "description": "Workstation administrator"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1205",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "SVC_SQL@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "svc_sql",
+        "distinguishedname": "CN=svc_sql,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": true,
+        "serviceprincipalnames": [
+          "MSSQLSvc/ws01.corp.idlab.test:1433"
+        ],
+        "dontreqpreauth": false,
+        "admincount": false,
+        "description": "SQL service account with an SPN and admin rights it does not need"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1206",
+      "Aces": [
+        {
+          "PrincipalSID": "S-1-5-21-1000000001-2000000002-3000000003-1201",
+          "PrincipalType": "User",
+          "RightName": "GenericAll",
+          "IsInherited": false
+        }
+      ],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "SVC_BACKUP@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "svc_backup",
+        "distinguishedname": "CN=svc_backup,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": false,
+        "admincount": false,
+        "description": "Backup service account granted directory replication rights"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1207",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "DA_ADMIN@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "da_admin",
+        "distinguishedname": "CN=da_admin,CN=Users,DC=corp,DC=idlab,DC=test",
+        "enabled": true,
+        "hasspn": false,
+        "serviceprincipalnames": [],
+        "dontreqpreauth": false,
+        "admincount": true,
+        "description": "Domain administrator who also logs on to a workstation"
+      },
+      "PrimaryGroupSID": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "AllowedToDelegate": [],
+      "SPNTargets": [],
+      "HasSIDHistory": []
+    }
+  ],
+  "meta": {
+    "methods": 0,
+    "type": "users",
+    "count": 8,
+    "version": 6
+  }
+}

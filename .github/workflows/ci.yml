@@ -1,0 +1,72 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: the workflow can read the code and nothing else.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Every action is pinned to a full commit SHA.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Lint, types, tests, render drift, isolation, path verification
+        run: make ci
+      - name: Known-vulnerability audit
+        run: make audit
+      - name: Report verified paths
+        run: |
+          line=$(python -m identity_attack_lab verify | tail -n 1)
+          echo "::notice title=BloodHound model::$line"
+
+  lab-static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PACKER_VERSION: 1.16.2
+      PACKER_SHA256: abbfe0cf74985084112659b53e3565f264f70a20914c3b7c4f789f54f61c2414
+      VAGRANT_VERSION: 2.4.9
+      VAGRANT_SHA256: 42d830d05e6e9e647f8a5c854d9f5295e319dac74edd37d54b97b4f29cbbd70d
+      CHECKPOINT_DISABLE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Packer and Vagrant (checksum-verified)
+        run: |
+          mkdir -p .tmp/bin
+          curl -fsSL --retry 3 --max-time 120 -o .tmp/packer.zip \
+            "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
+          echo "${PACKER_SHA256}  .tmp/packer.zip" | sha256sum -c
+          unzip -q .tmp/packer.zip -d .tmp/bin
+          curl -fsSL --retry 3 --max-time 300 -o .tmp/vagrant.deb \
+            "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}-1_amd64.deb"
+          echo "${VAGRANT_SHA256}  .tmp/vagrant.deb" | sha256sum -c
+          sudo dpkg -i .tmp/vagrant.deb
+          echo "$PWD/.tmp/bin" >> "$GITHUB_PATH"
+      - name: Packer fmt and validate
+        run: make packer-validate
+      - name: Vagrantfile syntax and configuration
+        working-directory: lab
+        run: |
+          ruby -c Vagrantfile
+          vagrant validate --ignore-provider
+      - name: PowerShell scripts parse
+        run: make ps-parse
+      - name: Report
+        run: echo "::notice title=Lab static checks::packer validate, vagrant validate and PowerShell parse passed"

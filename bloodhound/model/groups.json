@@ -1,0 +1,128 @@
+{
+  "data": [
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-512",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "DOMAIN ADMINS@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "Domain Admins",
+        "distinguishedname": "CN=Domain Admins,CN=Users,DC=corp,DC=idlab,DC=test"
+      },
+      "Members": [
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-500",
+          "ObjectType": "User"
+        },
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1207",
+          "ObjectType": "User"
+        }
+      ]
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-513",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "DOMAIN USERS@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "Domain Users",
+        "distinguishedname": "CN=Domain Users,CN=Users,DC=corp,DC=idlab,DC=test"
+      },
+      "Members": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-515",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "DOMAIN COMPUTERS@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "Domain Computers",
+        "distinguishedname": "CN=Domain Computers,CN=Users,DC=corp,DC=idlab,DC=test"
+      },
+      "Members": []
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1101",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "HELPDESK@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "Helpdesk",
+        "distinguishedname": "CN=Helpdesk,CN=Users,DC=corp,DC=idlab,DC=test"
+      },
+      "Members": [
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1203",
+          "ObjectType": "User"
+        }
+      ]
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1102",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "IT ADMINS@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "IT Admins",
+        "distinguishedname": "CN=IT Admins,CN=Users,DC=corp,DC=idlab,DC=test"
+      },
+      "Members": [
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1204",
+          "ObjectType": "User"
+        },
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1205",
+          "ObjectType": "User"
+        }
+      ]
+    },
+    {
+      "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-516",
+      "Aces": [],
+      "IsDeleted": false,
+      "IsACLProtected": false,
+      "ContainedBy": null,
+      "Properties": {
+        "name": "DOMAIN CONTROLLERS@CORP.IDLAB.TEST",
+        "domain": "CORP.IDLAB.TEST",
+        "domainsid": "S-1-5-21-1000000001-2000000002-3000000003",
+        "samaccountname": "Domain Controllers",
+        "distinguishedname": "CN=Domain Controllers,CN=Users,DC=corp,DC=idlab,DC=test"
+      },
+      "Members": [
+        {
+          "ObjectIdentifier": "S-1-5-21-1000000001-2000000002-3000000003-1001",
+          "ObjectType": "Computer"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "methods": 0,
+    "type": "groups",
+    "count": 6,
+    "version": 6
+  }
+}

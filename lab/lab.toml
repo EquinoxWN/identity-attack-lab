@@ -1,0 +1,130 @@
+# identity-attack-lab: the single source of truth for the lab.
+# `make render` turns this file into lab/Vagrantfile, lab/provision/*.ps1 and bloodhound/model/*.json.
+#
+# Safety rules enforced by the validator (src/identity_attack_lab/spec.py):
+# - the domain ends in .test (reserved by RFC 2606, never resolves on the internet);
+# - every VM address is inside the VirtualBox host-only range 192.168.56.0/21;
+# - every password contains EXAMPLE-NOT-A-SECRET, so none can be mistaken for a real one.
+
+# Security groups besides the built-in Domain Admins, Domain Users and Domain Computers.
+groups = ["Helpdesk", "IT Admins"]
+
+[domain]
+fqdn = "corp.idlab.test"
+netbios = "IDLAB"
+# Fixed SID used only for the BloodHound model; the real lab gets a random one at promotion.
+sid = "S-1-5-21-1000000001-2000000002-3000000003"
+admin_password = "EXAMPLE-NOT-A-SECRET-Admin1!"
+
+[network]
+cidr = "192.168.56.0/24"
+
+[[hosts]]
+name = "DC01"
+role = "dc"
+ip = "192.168.56.10"
+memory_mb = 2048
+cpus = 2
+
+[[hosts]]
+name = "WS01"
+role = "member"
+ip = "192.168.56.20"
+memory_mb = 2048
+cpus = 2
+
+# ---------------------------------------------------------------- users
+
+[[users]]
+name = "alice"
+password = "EXAMPLE-NOT-A-SECRET-Alice1!"
+owned = true
+description = "Foothold: an ordinary employee account assumed to be phished"
+
+[[users]]
+name = "bob"
+password = "EXAMPLE-NOT-A-SECRET-Bob1!"
+owned = true
+description = "Control: an ordinary employee with no path to Tier Zero"
+
+[[users]]
+name = "carol"
+password = "EXAMPLE-NOT-A-SECRET-Carol1!"
+groups = ["Helpdesk"]
+dont_require_preauth = true
+description = "Helpdesk operator with Kerberos pre-authentication disabled"
+
+[[users]]
+name = "it_ian"
+password = "EXAMPLE-NOT-A-SECRET-Ian1!"
+groups = ["IT Admins"]
+description = "Workstation administrator"
+
+[[users]]
+name = "svc_sql"
+password = "EXAMPLE-NOT-A-SECRET-Sql1!"
+groups = ["IT Admins"]
+spns = ["MSSQLSvc/ws01.corp.idlab.test:1433"]
+description = "SQL service account with an SPN and admin rights it does not need"
+
+[[users]]
+name = "svc_backup"
+password = "EXAMPLE-NOT-A-SECRET-Backup1!"
+description = "Backup service account granted directory replication rights"
+
+[[users]]
+name = "da_admin"
+password = "EXAMPLE-NOT-A-SECRET-DomainAdmin1!"
+groups = ["Domain Admins"]
+description = "Domain administrator who also logs on to a workstation"
+
+# ---------------------------------------------------------------- misconfigurations
+
+# Helpdesk can reset it_ian's password (ACL abuse).
+[[acls]]
+principal = "Helpdesk"
+right = "ForceChangePassword"
+target = "it_ian"
+
+# alice has full control over the backup service account (ACL abuse).
+[[acls]]
+principal = "alice"
+right = "GenericAll"
+target = "svc_backup"
+
+# svc_backup holds both replication rights on the domain object (DCSync).
+[[acls]]
+principal = "svc_backup"
+right = "DCSync"
+target = "domain"
+
+# IT Admins (including the service account) are local administrators on WS01.
+[[local_admins]]
+host = "WS01"
+principal = "IT Admins"
+
+# A domain admin keeps a logon session on WS01, so its credentials live in WS01's memory.
+[[sessions]]
+host = "WS01"
+user = "da_admin"
+
+# ---------------------------------------------------------------- paths the lab must contain
+# `make verify` checks that the analysis of a collection finds exactly these, and no others.
+
+[[expected_paths]]
+id = "acl-dcsync"
+technique = "T1003.006"
+start = "alice"
+path = "alice -GenericAll-> svc_backup -DCSync-> corp.idlab.test"
+
+[[expected_paths]]
+id = "kerberoast-admin-session"
+technique = "T1558.003"
+start = "svc_sql"
+path = "svc_sql -MemberOf-> IT Admins -AdminTo-> WS01 -HasSession-> da_admin -MemberOf-> Domain Admins"
+
+[[expected_paths]]
+id = "asrep-password-reset"
+technique = "T1558.004"
+start = "carol"
+path = "carol -MemberOf-> Helpdesk -ForceChangePassword-> it_ian -MemberOf-> IT Admins -AdminTo-> WS01 -HasSession-> da_admin -MemberOf-> Domain Admins"

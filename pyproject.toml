@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "identity-attack-lab"
+version = "0.1.0"
+description = "A local Active Directory lab defined in one file: Vagrant and Packer build it, BloodHound data shows its paths to Domain Admin."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+# No runtime dependencies: TOML, JSON, zip and XML come from the standard library.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "pip-audit>=2.7"]
+
+[project.scripts]
+identity-attack-lab = "identity_attack_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
+
+[tool.mypy]
+strict = true
+files = ["src", "tests"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = [".tmp"]
+
+[tool.ruff.lint]
+# Bugs, security (bandit), modern syntax, imports, naming and test style; `ruff format` owns line length.
+select = ["E", "W", "F", "I", "B", "UP", "S", "SIM", "RUF", "N", "C4", "PT", "RET", "PIE", "PERF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests use assert and the fake lab passwords on purpose.
+"tests/**" = ["S101", "S105", "S106"]
