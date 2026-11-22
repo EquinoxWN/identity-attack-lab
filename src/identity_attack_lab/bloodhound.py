@@ -44,9 +44,6 @@ class CollectionError(ValueError):
     """A collection file is malformed or too large; the message names the file."""
 
 
-# ---------------------------------------------------------------- model export
-
-
 @dataclass
 class _Ids:
     """Deterministic SIDs and BloodHound names for every principal in a spec."""
@@ -274,9 +271,6 @@ def model_collection(spec: LabSpec) -> dict[str, dict[str, Any]]:
         "computers.json": _meta("computers", computers),
         "domains.json": _meta("domains", [domain]),
     }
-
-
-# ---------------------------------------------------------------- collection load
 
 
 @dataclass(frozen=True)
